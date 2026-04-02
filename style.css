@@ -574,6 +574,13 @@ img { max-width: 100%; display: block; }
   align-items: center;
 }
 
+.about-inner:has(.about-img-empty) {
+  grid-template-columns: 1fr;
+}
+.about-inner:has(.about-img-empty) .about-image {
+  display: none;
+}
+
 .about-img-frame {
   position: relative;
   border-radius: var(--radius);
@@ -583,6 +590,13 @@ img { max-width: 100%; display: block; }
   aspect-ratio: 3/4;
   display: flex;
   align-items: center;
+}
+
+.about-img-empty {
+  background: transparent;
+  border: none;
+  aspect-ratio: unset;
+}
   justify-content: center;
 }
 
