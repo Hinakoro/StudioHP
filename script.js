@@ -1,0 +1,105 @@
+/* ============================
+   HKM Studio — script.js
+   ============================ */
+
+/* ---------- ナビゲーション スクロール ---------- */
+const navbar = document.getElementById('navbar');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ---------- ハンバーガーメニュー ---------- */
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('nav-links');
+
+hamburger.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', isOpen);
+});
+
+// メニュー内リンクをタップしたら閉じる
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', false);
+  });
+});
+
+/* ---------- スクロールアニメーション ---------- */
+const aosItems = document.querySelectorAll('[data-aos]');
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        // カード類は少しずつ遅延させる
+        const delay = entry.target.closest('.works-grid, .services-grid, .pricing-grid')
+          ? [...entry.target.parentElement.children].indexOf(entry.target) * 80
+          : 0;
+        setTimeout(() => entry.target.classList.add('visible'), delay);
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+);
+
+aosItems.forEach(el => observer.observe(el));
+
+/* ---------- コンタクトフォームのバリデーション ---------- */
+const form       = document.getElementById('contact-form');
+const submitBtn  = document.getElementById('submit-btn');
+const btnText    = submitBtn.querySelector('.btn-text');
+const btnLoading = submitBtn.querySelector('.btn-loading');
+const formSuccess = document.getElementById('form-success');
+
+function validateField(id, errId, check, message) {
+  const el  = document.getElementById(id);
+  const err = document.getElementById(errId);
+  if (!check(el.value)) {
+    el.classList.add('error');
+    err.textContent = message;
+    return false;
+  }
+  el.classList.remove('error');
+  err.textContent = '';
+  return true;
+}
+
+function validateAll() {
+  const nameOk = validateField('name', 'name-error',
+    v => v.trim().length >= 1, 'お名前を入力してください。');
+  const emailOk = validateField('email', 'email-error',
+    v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), '正しいメールアドレスを入力してください。');
+  const msgOk = validateField('message', 'message-error',
+    v => v.trim().length >= 10, 'メッセージは10文字以上入力してください。');
+  return nameOk && emailOk && msgOk;
+}
+
+// リアルタイムバリデーション（一度送信しようとした後）
+let submitted = false;
+['name', 'email', 'message'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    if (submitted) validateAll();
+  });
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitted = true;
+
+  if (!validateAll()) return;
+
+  // ローディング表示
+  btnText.hidden = true;
+  btnLoading.hidden = false;
+  submitBtn.disabled = true;
+
+  // ※ 実際の送信先は Formspree / Netlify Forms 等に接続してください
+  // 現在はデモ用に 1.5 秒後に成功表示します
+  await new Promise(r => setTimeout(r, 1500));
+
+  form.hidden = true;
+  formSuccess.hidden = false;
+});
