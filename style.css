@@ -209,8 +209,10 @@ img { max-width: 100%; display: block; }
   gap: 5px;
   background: none;
   border: none;
+  outline: none;
   cursor: pointer;
   padding: 4px;
+  -webkit-tap-highlight-color: transparent;
 }
 .hamburger span {
   display: block;
