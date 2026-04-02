@@ -162,6 +162,12 @@ img { max-width: 100%; display: block; }
   justify-content: space-between;
   height: 68px;
   padding-inline: 5%;
+  min-width: 0;
+}
+
+.logo {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .logo {
@@ -582,14 +588,13 @@ img { max-width: 100%; display: block; }
   justify-content: center;
 }
 
-.about-img-placeholder {
-  width: 120px;
-  height: 120px;
-  color: var(--bg-card);
+.about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
-.about-img-placeholder svg { width: 100%; height: 100%; }
-
-/* 実際の写真がある場合は <img> に差し替えてください */
 
 .about-title {
   font-family: var(--font-en);
