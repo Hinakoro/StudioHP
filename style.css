@@ -147,6 +147,7 @@ img { max-width: 100%; display: block; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
+  padding-top: env(safe-area-inset-top);
   transition: background var(--transition), backdrop-filter var(--transition);
 }
 
@@ -166,13 +167,8 @@ img { max-width: 100%; display: block; }
 }
 
 .logo {
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.logo {
   font-family: var(--font-en);
-  font-size: 1.3rem;
+  font-size: clamp(1rem, 4vw, 1.3rem);
   font-weight: 900;
   letter-spacing: -0.02em;
   color: var(--white);
