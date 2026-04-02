@@ -145,7 +145,7 @@
             </svg>
           </div>
           <h3 class="service-title">レコーディング</h3>
-          <p class="service-desc">ボーカル・楽器の収録。自宅録音データのレタッチ・ノイズ除去にも対応。クリアで芯のある音を引き出します。</p>
+          <p class="service-desc">主にボーカル収録が得意です。ギター・ベースなど軽い楽器録音も対応可。自宅録音データのノイズ除去・補正もお任せください。</p>
         </div>
 
         <div class="service-card" data-aos>
@@ -261,7 +261,7 @@
           <div class="pricing-header">
             <h3 class="pricing-name">依頼前にご確認ください</h3>
           </div>
-          <p class="pricing-desc">・すべて税込価格です<br />・オフボーカル音源（カラオケ）をご用意ください<br />・自宅録音は WAV / 44.1kHz / 24bit 推奨<br />・複数曲まとめてのご依頼は追加割引あり（要相談）<br />・まずはお気軽にDMまたはフォームへ！</p>
+          <p class="pricing-desc">・すべて税込価格です<br />・オフボーカル音源（カラオケ）をご用意ください<br />・自宅録音は WAV / 44.1kHz / 24bit 推奨<br />・楽器録音（ギター・ベース等）は要相談<br />・複数曲まとめてのご依頼は追加割引あり（要相談）<br />・まずはお気軽にDMまたはフォームへ！</p>
           <a href="#contact" class="btn btn-gold">まず相談する</a>
         </div>
 
@@ -326,6 +326,8 @@
         <form id="contact-form" class="contact-form" novalidate>
           <input type="hidden" name="_subject" value="【HKM Studio】お問い合わせが届きました" />
           <input type="hidden" name="_replyto" value="hinakoro137@gmail.com" />
+          <!-- ハニーポット：ボットのみ入力するため、人間には見えない -->
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
           <div class="form-row">
             <div class="form-group">
               <label for="name">お名前 <span class="required">*</span></label>
