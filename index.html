@@ -23,6 +23,7 @@
         <li><a href="#works">Works</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#campaign" class="nav-campaign" id="nav-campaign" hidden>Campaign 🎁</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#contact" class="nav-cta">Contact</a></li>
       </ul>
@@ -273,6 +274,98 @@
     </div>
   </section>
 
+  <!-- キャンペーン -->
+  <section id="campaign" class="section section-dark campaign-section" hidden>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Campaign</p>
+        <h2 class="section-title">キャンペーン開催中</h2>
+        <p class="section-note" id="campaign-period"></p>
+      </div>
+
+      <div class="campaign-grid">
+
+        <!-- 初回割引 -->
+        <div class="campaign-card" data-aos>
+          <div class="campaign-icon">🎤</div>
+          <div class="campaign-badge">初回限定</div>
+          <h3 class="campaign-title">はじめての方 20% OFF</h3>
+          <p class="campaign-desc">HKM Studio初依頼の方限定。Mix+Master・フルセット・Mixing Onlyすべて対象。抽選で割引クーポンを発行します。</p>
+          <ul class="campaign-conditions">
+            <li>初回依頼の方のみ</li>
+            <li>学割・他キャンペーンとの併用不可</li>
+            <li>抽選制（毎偶数月）</li>
+          </ul>
+          <button class="btn btn-outline campaign-apply-btn" data-campaign="初回20%OFF割引クーポン">応募する</button>
+        </div>
+
+        <!-- モニター無料MIX -->
+        <div class="campaign-card campaign-card-featured" data-aos>
+          <div class="campaign-icon">🎧</div>
+          <div class="campaign-badge campaign-badge-gold">モニター募集</div>
+          <h3 class="campaign-title">無料 MIX（実績づくり）</h3>
+          <p class="campaign-desc">音源を無料でミックス・マスタリングします。完成音源はポートフォリオとして使用させていただきます。</p>
+          <ul class="campaign-conditions">
+            <li>各回2名限定・抽選制</li>
+            <li>オフボーカル音源を別途ご用意ください</li>
+            <li>学割・他キャンペーンとの併用不可</li>
+            <li>ポートフォリオ掲載への同意が必要</li>
+          </ul>
+          <button class="btn btn-primary campaign-apply-btn" data-campaign="モニター無料MIX">応募する</button>
+        </div>
+
+        <!-- 期間限定割引 -->
+        <div class="campaign-card" data-aos>
+          <div class="campaign-icon">⏰</div>
+          <div class="campaign-badge">期間限定</div>
+          <h3 class="campaign-title">今月限定 10% OFF</h3>
+          <p class="campaign-desc">偶数月の開催期間中に依頼された方全員に10%割引クーポンをプレゼント。お問い合わせ時にキャンペーンを希望とお伝えください。</p>
+          <ul class="campaign-conditions">
+            <li>偶数月中の依頼が対象</li>
+            <li>学割・他キャンペーンとの併用不可</li>
+            <li>抽選なし・先着順</li>
+          </ul>
+          <button class="btn btn-outline campaign-apply-btn" data-campaign="期間限定10%OFFクーポン">受け取る</button>
+        </div>
+
+      </div>
+
+      <!-- 応募フォーム（モーダル） -->
+      <div id="campaign-modal" class="campaign-modal" hidden>
+        <div class="campaign-modal-inner">
+          <button class="campaign-modal-close" id="campaign-modal-close">✕</button>
+          <p class="section-eyebrow">Campaign Apply</p>
+          <h3 class="campaign-modal-title" id="campaign-modal-title"></h3>
+          <form id="campaign-form" novalidate>
+            <input type="hidden" name="_subject" value="【HKM Studio】キャンペーン応募" />
+            <input type="hidden" name="campaign" id="campaign-type-input" />
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+            <div class="form-group">
+              <label for="c-name">お名前 <span class="required">*</span></label>
+              <input type="text" id="c-name" name="name" placeholder="山田 太郎" required />
+            </div>
+            <div class="form-group">
+              <label for="c-email">メールアドレス <span class="required">*</span></label>
+              <input type="email" id="c-email" name="email" placeholder="example@mail.com" required />
+            </div>
+            <div class="form-group">
+              <label for="c-message">ひとこと（任意）</label>
+              <textarea id="c-message" name="message" rows="3" placeholder="制作したい曲のジャンルや雰囲気など"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full" id="campaign-submit-btn">
+              <span class="btn-text">応募する</span>
+              <span class="btn-loading" hidden>送信中...</span>
+            </button>
+            <div id="campaign-success" class="form-success" hidden>
+              応募ありがとうございます！<br />結果は登録メールアドレスにご連絡します。
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <!-- About -->
   <section id="about" class="section section-dark">
     <div class="container">
@@ -337,6 +430,14 @@
             </select>
           </div>
           <div class="form-group">
+            <label for="coupon">クーポンコード（お持ちの方）</label>
+            <div class="coupon-row">
+              <input type="text" id="coupon" name="coupon" placeholder="例：HKM-XXXX" autocomplete="off" />
+              <button type="button" class="btn btn-outline" id="coupon-apply-btn">適用</button>
+            </div>
+            <span class="coupon-result" id="coupon-result"></span>
+          </div>
+          <div class="form-group">
             <label for="message">メッセージ <span class="required">*</span></label>
             <textarea id="message" name="message" rows="5" placeholder="楽曲のジャンルやご要望など、お気軽にお書きください。" required></textarea>
             <span class="field-error" id="message-error"></span>
@@ -349,6 +450,16 @@
             お問い合わせありがとうございます。<br />通常1〜2営業日以内にご返信いたします。
           </div>
         </form>
+
+        <div class="payment-info">
+          <h4>お支払い方法</h4>
+          <div class="payment-methods">
+            <span class="payment-method">💳 PayPay</span>
+            <span class="payment-method">🏦 銀行振込</span>
+          </div>
+          <p class="payment-note">※ お支払い詳細はご依頼確定後にお知らせします。前払い制となります。</p>
+        </div>
+
       </div>
     </div>
   </section>
