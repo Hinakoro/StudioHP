@@ -24,63 +24,53 @@
 })();
 
 /* ---------- キャンペーン応募モーダル ---------- */
-const campaignModal     = document.getElementById('campaign-modal');
-const campaignModalTitle = document.getElementById('campaign-modal-title');
-const campaignTypeInput = document.getElementById('campaign-type-input');
-const campaignForm      = document.getElementById('campaign-form');
-const campaignSuccess   = document.getElementById('campaign-success');
-const campaignSubmitBtn = document.getElementById('campaign-submit-btn');
+function initCampaignModal() {
+  const modal      = document.getElementById('campaign-modal');
+  const modalTitle = document.getElementById('campaign-modal-title');
+  const typeInput  = document.getElementById('campaign-type-input');
+  const form       = document.getElementById('campaign-form');
+  const success    = document.getElementById('campaign-success');
+  const submitBtn  = document.getElementById('campaign-submit-btn');
+  const closeBtn   = document.getElementById('campaign-modal-close');
+  if (!modal) return;
 
-document.querySelectorAll('.campaign-apply-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const type = btn.dataset.campaign;
-    campaignModalTitle.textContent = type;
-    campaignTypeInput.value = type;
-    campaignForm.hidden = false;
-    campaignSuccess.hidden = true;
-    campaignModal.hidden = false;
-    document.body.style.overflow = 'hidden';
-  });
-});
+  const closeModal = () => { modal.hidden = true; document.body.style.overflow = ''; };
 
-document.getElementById('campaign-modal-close').addEventListener('click', () => {
-  campaignModal.hidden = true;
-  document.body.style.overflow = '';
-});
-campaignModal.addEventListener('click', e => {
-  if (e.target === campaignModal) {
-    campaignModal.hidden = true;
-    document.body.style.overflow = '';
-  }
-});
-
-campaignForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  const nameVal  = document.getElementById('c-name').value.trim();
-  const emailVal = document.getElementById('c-email').value.trim();
-  if (!nameVal || !emailVal) return;
-
-  const btnText    = campaignSubmitBtn.querySelector('.btn-text');
-  const btnLoading = campaignSubmitBtn.querySelector('.btn-loading');
-  btnText.hidden = true;
-  btnLoading.hidden = false;
-  campaignSubmitBtn.disabled = true;
-
-  const data = new FormData(campaignForm);
-  const res = await fetch('https://formspree.io/f/mykbdznl', {
-    method: 'POST', body: data, headers: { 'Accept': 'application/json' }
+  document.querySelectorAll('.campaign-apply-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      modalTitle.textContent = btn.dataset.campaign;
+      typeInput.value = btn.dataset.campaign;
+      form.hidden = false;
+      success.hidden = true;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+    });
   });
 
-  if (res.ok) {
-    campaignForm.hidden = true;
-    campaignSuccess.hidden = false;
-  } else {
-    btnText.hidden = false;
-    btnLoading.hidden = true;
-    campaignSubmitBtn.disabled = false;
-    alert('送信に失敗しました。時間をおいて再度お試しください。');
-  }
-});
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!document.getElementById('c-name').value.trim() ||
+        !document.getElementById('c-email').value.trim()) return;
+
+    const btnText    = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    btnText.hidden = true; btnLoading.hidden = false; submitBtn.disabled = true;
+
+    const res = await fetch('https://formspree.io/f/mykbdznl', {
+      method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) { form.hidden = true; success.hidden = false; }
+    else {
+      btnText.hidden = false; btnLoading.hidden = true; submitBtn.disabled = false;
+      alert('送信に失敗しました。時間をおいて再度お試しください。');
+    }
+  });
+}
+initCampaignModal();
 
 /* ---------- クーポンコード ---------- */
 // コードはbase64エンコードして管理（平文回避）
