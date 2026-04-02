@@ -3,25 +3,22 @@
    ============================ */
 
 /* ---------- キャンペーン：偶数月のみ表示 ---------- */
-(() => {
-  const month = new Date().getMonth() + 1; // 1-12
-  if (month % 2 !== 0) return; // 奇数月は非表示
+function initCampaignSection() {
+  const month = new Date().getMonth() + 1;
+  if (month % 2 !== 0) return;
 
-  // セクション表示
   const section = document.getElementById('campaign');
   if (section) section.hidden = false;
 
-  // ナビリンク表示
   const navLink = document.getElementById('nav-campaign');
   if (navLink) navLink.hidden = false;
 
-  // 期間テキスト
   const year = new Date().getFullYear();
-  const end = new Date(year, month, 0); // 月末日
-  const endStr = `${month}月${end.getDate()}日`;
+  const end = new Date(year, month, 0);
   const el = document.getElementById('campaign-period');
-  if (el) el.textContent = `開催期間：${year}年${month}月1日 〜 ${endStr}`;
-})();
+  if (el) el.textContent = `開催期間：${year}年${month}月1日 〜 ${month}月${end.getDate()}日`;
+}
+initCampaignSection();
 
 /* ---------- キャンペーン応募モーダル ---------- */
 function initCampaignModal() {
