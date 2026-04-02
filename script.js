@@ -96,10 +96,20 @@ form.addEventListener('submit', async (e) => {
   btnLoading.hidden = false;
   submitBtn.disabled = true;
 
-  // ※ 実際の送信先は Formspree / Netlify Forms 等に接続してください
-  // 現在はデモ用に 1.5 秒後に成功表示します
-  await new Promise(r => setTimeout(r, 1500));
+  const data = new FormData(form);
+  const res = await fetch('https://formspree.io/f/mykbdznl', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  });
 
-  form.hidden = true;
-  formSuccess.hidden = false;
+  if (res.ok) {
+    form.hidden = true;
+    formSuccess.hidden = false;
+  } else {
+    btnText.hidden = false;
+    btnLoading.hidden = true;
+    submitBtn.disabled = false;
+    alert('送信に失敗しました。時間をおいて再度お試しください。');
+  }
 });
