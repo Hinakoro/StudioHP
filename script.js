@@ -2,6 +2,25 @@
    HKM Studio — script.js
    ============================ */
 
+/* ---------- YouTube タイトル・チャンネル名 自動取得 ---------- */
+document.querySelectorAll('.work-card').forEach(card => {
+  const iframe = card.querySelector('iframe');
+  if (!iframe) return;
+
+  const videoId = new URL(iframe.src).pathname.replace('/embed/', '');
+  const ytUrl   = `https://www.youtube.com/watch?v=${videoId}`;
+
+  fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(ytUrl)}&format=json`)
+    .then(r => r.json())
+    .then(data => {
+      const titleEl  = card.querySelector('.work-title');
+      const artistEl = card.querySelector('.work-artist');
+      if (titleEl)  titleEl.textContent  = data.title;
+      if (artistEl) artistEl.textContent = data.author_name;
+    })
+    .catch(() => {}); // 取得失敗時はプレースホルダーのまま
+});
+
 /* ---------- ナビゲーション スクロール ---------- */
 const navbar = document.getElementById('navbar');
 
