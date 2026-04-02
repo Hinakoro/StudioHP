@@ -928,6 +928,7 @@ img { max-width: 100%; display: block; }
 }
 
 /* モーダル */
+.campaign-modal[hidden] { display: none !important; }
 .campaign-modal {
   position: fixed;
   inset: 0;
