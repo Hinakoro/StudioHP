@@ -66,6 +66,18 @@ const observer = new IntersectionObserver(
 
 aosItems.forEach(el => observer.observe(el));
 
+/* ---------- 料金プランボタン → フォームのサービス自動選択 ---------- */
+document.querySelectorAll('.plan-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const plan = btn.dataset.plan;
+    const select = document.getElementById('service');
+    if (plan && select) select.value = plan;
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    setTimeout(() => document.getElementById('name').focus(), 600);
+  });
+});
+
 /* ---------- コンタクトフォームのバリデーション ---------- */
 const form       = document.getElementById('contact-form');
 const submitBtn  = document.getElementById('submit-btn');
